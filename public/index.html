@@ -15,40 +15,52 @@
       --text-muted: #9ca3af;
       --border: #2d3748;
     }
+
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background-color: var(--bg-dark); color: var(--text-light); padding: 20px; max-width: 1200px; margin: 0 auto; }
+
     header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 2px solid var(--border); margin-bottom: 20px; }
     h1 { color: var(--accent-green); font-size: 1.8rem; text-transform: uppercase; }
+
     .user-info { display: flex; align-items: center; gap: 15px; }
     .role-badge { background-color: var(--accent-blue); color: #000; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.8rem; }
     .role-badge.admin { background-color: var(--accent-green); }
+
     nav { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
     .nav-btn { background-color: var(--card-bg); color: var(--text-light); border: 1px solid var(--border); padding: 10px 18px; border-radius: 6px; cursor: pointer; font-weight: 600; }
     .nav-btn.active { background-color: var(--accent-green); color: #000; }
+
     .section { display: none; }
     .section.active { display: block; }
+
     .card { background-color: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 20px; }
     h2, h3, h4 { margin-bottom: 15px; color: var(--accent-green); }
+
     .form-group { margin-bottom: 15px; }
     label { display: block; margin-bottom: 5px; color: var(--text-muted); }
     input, select { width: 100%; padding: 10px; background-color: var(--bg-dark); border: 1px solid var(--border); border-radius: 6px; color: var(--text-light); }
+
     button { background-color: var(--accent-green); color: #000; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; }
     button.btn-danger { background-color: var(--accent-red); color: #fff; }
     button.btn-secondary { background-color: var(--border); color: var(--text-light); }
     button.btn-blue { background-color: var(--accent-blue); color: #000; }
+
     table { width: 100%; border-collapse: collapse; margin-top: 10px; margin-bottom: 20px; font-size: 0.95rem; }
     th, td { padding: 10px; text-align: center; border-bottom: 1px solid var(--border); }
     th { background-color: rgba(255, 255, 255, 0.05); color: var(--accent-green); }
     td:first-child, th:first-child { text-align: left; }
     tr.qualified { background-color: rgba(0, 255, 135, 0.08); }
+
     .match-card { display: flex; align-items: center; justify-content: space-between; background-color: var(--bg-dark); padding: 12px; border-radius: 6px; margin-bottom: 10px; border: 1px solid var(--border); }
     .match-team { flex: 1; font-weight: bold; }
     .match-team.right { text-align: right; }
     .match-score { font-size: 1.2rem; font-weight: bold; padding: 0 15px; color: var(--accent-green); }
+
     .auth-container { max-width: 400px; margin: 80px auto; }
     .auth-tabs { display: flex; margin-bottom: 20px; }
     .auth-tab { flex: 1; text-align: center; padding: 10px; background-color: var(--card-bg); cursor: pointer; border: 1px solid var(--border); }
     .auth-tab.active { background-color: var(--accent-green); color: #000; font-weight: bold; }
+
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
     .player-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg-dark); margin-bottom: 5px; border-radius: 4px; }
@@ -56,6 +68,7 @@
 </head>
 <body>
 
+  <!-- AUTHENTIFICATION -->
   <div id="auth-screen" class="auth-container">
     <div class="card">
       <h1 style="text-align: center; margin-bottom: 20px;">FIFA TOURNOI</h1>
@@ -63,11 +76,13 @@
         <div class="auth-tab active" onclick="switchAuthTab('login')">Connexion</div>
         <div class="auth-tab" onclick="switchAuthTab('register')">S'inscrire</div>
       </div>
+
       <form id="login-form" onsubmit="handleLogin(event)">
         <div class="form-group"><label>Identifiant</label><input type="text" id="login-username" required></div>
         <div class="form-group"><label>Mot de passe</label><input type="password" id="login-password" required></div>
         <button type="submit" style="width: 100%;">Se connecter</button>
       </form>
+
       <form id="register-form" onsubmit="handleRegister(event)" style="display: none;">
         <div class="form-group"><label>Identifiant</label><input type="text" id="reg-username" required></div>
         <div class="form-group"><label>Mot de passe</label><input type="password" id="reg-password" required></div>
@@ -76,6 +91,7 @@
     </div>
   </div>
 
+  <!-- APPLICATION PRINCIPALE -->
   <div id="app-screen" style="display: none;">
     <header>
       <h1>FIFA Tournament Manager</h1>
@@ -90,7 +106,6 @@
       <button class="nav-btn active" onclick="showSection('tournaments-list')">Tournois</button>
       <button id="nav-create-btn" class="nav-btn" onclick="showSection('create-tournament')" style="display: none;">Créer un tournoi</button>
       <button id="nav-admin-btn" class="nav-btn" onclick="loadUsersAdmin(); showSection('admin-panel')" style="display: none;">Gestion des Comptes</button>
-      <button class="nav-btn" onclick="loadHistory(); showSection('history-section')">📜 Historique</button>
     </nav>
 
     <div id="tournaments-list" class="section active">
@@ -100,18 +115,13 @@
       </div>
     </div>
 
-    <div id="history-section" class="section">
-      <div class="card">
-        <h2>Historique des Tournois Terminés</h2>
-        <div id="history-container"></div>
-      </div>
-    </div>
-
     <div id="admin-panel" class="section">
       <div class="card">
         <h2>Gestion de tous les comptes</h2>
         <table>
-          <thead><tr><th>Utilisateur</th><th>Rôle</th><th>Actions</th></tr></thead>
+          <thead>
+            <tr><th>Utilisateur</th><th>Rôle</th><th>Actions</th></tr>
+          </thead>
           <tbody id="admin-users-table"></tbody>
         </table>
       </div>
@@ -121,24 +131,27 @@
       <div class="card">
         <h2>Nouveau Tournoi</h2>
         <form onsubmit="handleCreateTournament(event)">
-          <div class="form-group"><label>Nom du tournoi</label><input type="text" id="tourney-name" required></div>
+          <div class="form-group"><label>Nom du tournoi</label><input type="text" id="tourney-name" placeholder="ex: Champions League FIFA" required></div>
           <div class="form-group">
             <label>Format</label>
             <select id="tourney-format" onchange="toggleGroupOptions(this.value, 'create')">
-              <option value="league">Championnat Direct</option>
+              <option value="league">Championnat Direct (Ligue)</option>
               <option value="groups">Poules + Élimination directe</option>
             </select>
           </div>
+
           <div id="group-options-create" style="display: none;" class="card">
             <h3>Paramètres des Poules</h3>
             <div class="grid-2">
-              <div class="form-group"><label>Joueurs par poule</label><input type="number" id="tourney-group-size" value="4" min="2"></div>
-              <div class="form-group"><label>Qualifiés par poule</label><input type="number" id="tourney-qualifiers" value="2" min="1"></div>
+              <div class="form-group"><label>Joueurs par poule</label><input type="number" id="tourney-group-size" value="4" min="2" max="8"></div>
+              <div class="form-group"><label>Qualifiés par poule</label><input type="number" id="tourney-qualifiers" value="2" min="1" max="6"></div>
             </div>
+            <div class="form-group"><label><input type="checkbox" id="tourney-best-thirds" style="width: auto;"> Repêcher les meilleurs 3èmes</label></div>
           </div>
+
           <div class="grid-2">
-            <div class="form-group"><label>Minimum</label><input type="number" id="tourney-min" value="4" min="2" required></div>
-            <div class="form-group"><label>Maximum</label><input type="number" id="tourney-max" value="16" min="2" required></div>
+            <div class="form-group"><label>Joueurs Minimum</label><input type="number" id="tourney-min" value="4" min="2" required></div>
+            <div class="form-group"><label>Joueurs Maximum</label><input type="number" id="tourney-max" value="16" min="2" required></div>
           </div>
           <button type="submit">Créer le tournoi</button>
         </form>
@@ -146,7 +159,7 @@
     </div>
 
     <div id="tournament-detail" class="section">
-      <button onclick="showSection('tournaments-list')" class="btn-secondary" style="margin-bottom: 15px;">← Retour</button>
+      <button onclick="showSection('tournaments-list')" class="btn-secondary" style="margin-bottom: 15px;">← Retour aux tournois</button>
       <div id="detail-content"></div>
     </div>
   </div>
@@ -154,7 +167,7 @@
   <script>
     let currentUser = null;
     let tournaments = [];
-    let historyTourneys = [];
+    let activeTourneyId = null;
 
     function switchAuthTab(tab) {
       document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
@@ -171,35 +184,47 @@
 
     async function handleLogin(e) {
       e.preventDefault();
-      const res = await fetch('/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: document.getElementById('login-username').value.trim(), password: document.getElementById('login-password').value.trim() }) });
+      const u = document.getElementById('login-username').value.trim();
+      const p = document.getElementById('login-password').value.trim();
+      const res = await fetch('/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: u, password: p }) });
       const data = await res.json();
       if (data.success) { currentUser = data.user; initApp(); } else alert(data.message);
     }
 
     async function handleRegister(e) {
       e.preventDefault();
-      const res = await fetch('/api/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: document.getElementById('reg-username').value.trim(), password: document.getElementById('reg-password').value.trim() }) });
+      const u = document.getElementById('reg-username').value.trim();
+      const p = document.getElementById('reg-password').value.trim();
+      const res = await fetch('/api/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: u, password: p }) });
       const data = await res.json();
       if (data.success) { currentUser = data.user; initApp(); } else alert(data.message);
     }
 
-    function handleLogout() { currentUser = null; document.getElementById('auth-screen').style.display = 'block'; document.getElementById('app-screen').style.display = 'none'; }
+    function handleLogout() {
+      currentUser = null;
+      document.getElementById('auth-screen').style.display = 'block';
+      document.getElementById('app-screen').style.display = 'none';
+    }
 
     function initApp() {
       document.getElementById('auth-screen').style.display = 'none';
       document.getElementById('app-screen').style.display = 'block';
       document.getElementById('user-display').innerText = currentUser.username;
+      
       const roleBadge = document.getElementById('role-display');
       if (currentUser.role === 'creator') {
-        roleBadge.innerText = 'Organisateur'; roleBadge.classList.add('admin');
+        roleBadge.innerText = 'Organisateur';
+        roleBadge.classList.add('admin');
         document.getElementById('nav-create-btn').style.display = 'inline-block';
         document.getElementById('nav-admin-btn').style.display = 'inline-block';
       } else {
-        roleBadge.innerText = 'Joueur'; roleBadge.classList.remove('admin');
+        roleBadge.innerText = 'Joueur';
+        roleBadge.classList.remove('admin');
         document.getElementById('nav-create-btn').style.display = 'none';
         document.getElementById('nav-admin-btn').style.display = 'none';
       }
-      showSection('tournaments-list'); loadTournaments();
+      showSection('tournaments-list');
+      loadTournaments();
     }
 
     function showSection(id) {
@@ -213,33 +238,56 @@
     }
 
     async function loadUsersAdmin() {
-      const users = await (await fetch('/api/users')).json();
-      document.getElementById('admin-users-table').innerHTML = users.map(u => `<tr><td><strong>${u.username}</strong></td><td>${u.role}</td><td><button class="btn-secondary" style="padding:4px;" onclick="changePassword('${u.username}')">MDP</button> ${u.username !== 'Léo A'?`<button class="btn-danger" style="padding:4px;" onclick="deleteUser('${u.username}')">Suppr</button>`:''}</td></tr>`).join('');
+      const res = await fetch('/api/users');
+      const users = await res.json();
+      document.getElementById('admin-users-table').innerHTML = users.map(u => `
+        <tr>
+          <td><strong>${u.username}</strong></td>
+          <td>${u.role === 'creator' ? '<span style="color:var(--accent-green)">Organisateur</span>' : 'Joueur'}</td>
+          <td>
+            <button class="btn-secondary" style="padding:4px 8px; font-size:0.8rem;" onclick="changeUserPassword('${u.username}')">MDP</button>
+            ${u.username !== 'Léo A' ? `<button class="btn-danger" style="padding:4px 8px; font-size:0.8rem;" onclick="deleteUser('${u.username}')">Supprimer</button>` : ''}
+          </td>
+        </tr>
+      `).join('');
     }
 
-    async function changePassword(username) {
-      const np = prompt(`Nouveau MDP pour ${username} :`);
-      if (np) { await fetch(`/api/users/${username}/password`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ newPassword: np }) }); alert('Mis à jour !'); }
+    async function changeUserPassword(username) {
+      const newPassword = prompt(`Nouveau mot de passe pour ${username} :`);
+      if (newPassword) {
+        await fetch(`/api/users/${username}/password`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ newPassword }) });
+        alert('Mot de passe mis à jour !');
+      }
     }
 
     async function deleteUser(username) {
-      if (confirm(`Supprimer ${username} ?`)) { await fetch(`/api/users/${username}`, { method: 'DELETE' }); loadUsersAdmin(); }
+      if (confirm(`Supprimer le compte de ${username} ?`)) {
+        await fetch(`/api/users/${username}`, { method: 'DELETE' });
+        loadUsersAdmin();
+      }
     }
 
     async function loadTournaments() {
-      tournaments = await (await fetch('/api/tournaments')).json();
-      document.getElementById('tournaments-container').innerHTML = tournaments.length === 0 ? '<p style="color:var(--text-muted)">Aucun tournoi.</p>' : tournaments.map(t => `<div class="card"><div style="display:flex; justify-content:space-between; align-items:center;"><div><h3>${t.name}</h3><p style="color:var(--text-muted)">Inscrits: ${t.players.length}/${t.max}</p></div><button onclick="viewTournament(${t.id})">Voir</button></div></div>`).join('');
+      const res = await fetch('/api/tournaments');
+      tournaments = await res.json();
+      renderTournaments();
     }
 
-    async function loadHistory() {
-      historyTourneys = await (await fetch('/api/history')).json();
-      document.getElementById('history-container').innerHTML = historyTourneys.length === 0 ? '<p style="color:var(--text-muted)">Aucun historique disponible.</p>' : historyTourneys.map(t => `
+    function renderTournaments() {
+      const c = document.getElementById('tournaments-container');
+      if (tournaments.length === 0) {
+        c.innerHTML = '<p style="color:var(--text-muted)">Aucun tournoi disponible.</p>';
+        return;
+      }
+      c.innerHTML = tournaments.map(t => `
         <div class="card">
-          <h3>🏆 ${t.name} (Terminé)</h3>
-          <h4 style="margin-top:10px;">Classement Final :</h4>
-          <ol style="padding-left:20px; color:var(--text-light);">
-            ${t.finalRanking.map((p, idx) => `<li><strong>${p}</strong> ${idx===0?'👑 Vainqueur':idx===1?'🥈 Finaliste':idx===2?'🥉 3ème':idx===3?'4ème':''}</li>`).join('')}
-          </ol>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <h3>${t.name}</h3>
+              <p style="color:var(--text-muted); font-size:0.9rem;">Format: ${t.format === 'league' ? 'Championnat' : 'Poules + Élimination'} | Inscrits: ${t.players.length}/${t.max}</p>
+            </div>
+            <button onclick="viewTournament(${t.id})">Voir le tournoi</button>
+          </div>
         </div>
       `).join('');
     }
@@ -251,12 +299,15 @@
         format: document.getElementById('tourney-format').value,
         groupSize: document.getElementById('tourney-group-size').value,
         qualifiersPerGroup: document.getElementById('tourney-qualifiers').value,
+        allowBestThirds: document.getElementById('tourney-best-thirds').checked,
         min: document.getElementById('tourney-min').value,
         max: document.getElementById('tourney-max').value,
         creator: currentUser.username
       };
-      await fetch('/api/tournaments', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-      loadTournaments(); showSection('tournaments-list');
+
+      const res = await fetch('/api/tournaments', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      const data = await res.json();
+      if (data.success) { loadTournaments(); showSection('tournaments-list'); } else alert(data.message);
     }
 
     function computeStandings(players, matches, stageName) {
@@ -286,90 +337,198 @@
     }
 
     async function viewTournament(id) {
-      tournaments = await (await fetch('/api/tournaments')).json();
+      activeTourneyId = id;
+      const res = await fetch('/api/tournaments');
+      tournaments = await res.json();
       const t = tournaments.find(x => x.id == id);
       showSection('tournament-detail');
+
       const isCreator = currentUser.role === 'creator';
       const isJoined = t.players.includes(currentUser.username);
 
-      let html = `<div class="card"><h2>${t.name}</h2><p><strong>Statut:</strong> ${t.status}</p><br>`;
+      let html = `<div class="card">
+        <h2>${t.name}</h2>
+        <p><strong>Statut:</strong> ${t.status === 'draft' ? 'Inscriptions ouvertes' : (t.status === 'knockout_setup' ? 'Poules terminées - Configuration finale' : 'En cours')}</p>
+        <p><strong>Format:</strong> ${t.format === 'league' ? 'Championnat' : `Poules (${t.groupSize} / poule, ${t.qualifiersPerGroup} qualifiés)`}</p>
+        <br>`;
 
       if (t.status === 'draft') {
         if (!isJoined && t.players.length < t.max) html += `<button onclick="joinTourney(${t.id})">S'inscrire</button> `;
         else if (isJoined) html += `<button class="btn-danger" onclick="leaveTourney(${t.id})">Se désinscrire</button> `;
+
         if (isCreator) {
-          html += `<button class="btn-danger" onclick="deleteTourney(${t.id})">Supprimer</button><br><br>`;
-          if (t.format === 'groups' && t.players.length >= t.min) html += `<button class="btn-blue" onclick="setupGroups(${t.id})">Générer Poules</button><br><br>`;
-          if (t.players.length >= t.min) html += `<button class="btn-blue" style="width:100%;" onclick="startTourney(${t.id})">🚀 Lancer</button>`;
+          html += `
+            <button class="btn-danger" onclick="deleteTourney(${t.id})">Supprimer le tournoi</button>
+            <hr style="margin:20px 0; border-color:var(--border);">
+            <h3>Paramètres</h3>
+            <div class="card">
+              <div class="form-group"><label>Nom</label><input type="text" id="edit-name" value="${t.name}"></div>
+              <div class="grid-2">
+                <div class="form-group"><label>Min</label><input type="number" id="edit-min" value="${t.min}"></div>
+                <div class="form-group"><label>Max</label><input type="number" id="edit-max" value="${t.max}"></div>
+              </div>
+              <div class="form-group">
+                <label>Format</label>
+                <select id="edit-format" onchange="toggleGroupOptions(this.value, 'edit')">
+                  <option value="league" ${t.format==='league'?'selected':''}>Championnat</option>
+                  <option value="groups" ${t.format==='groups'?'selected':''}>Poules + Élimination</option>
+                </select>
+              </div>
+              <div id="group-options-edit" style="display:${t.format==='groups'?'block':'none'};">
+                <div class="grid-2">
+                  <div class="form-group"><label>Taille poule</label><input type="number" id="edit-groupsize" value="${t.groupSize}"></div>
+                  <div class="form-group"><label>Qualifiés / poule</label><input type="number" id="edit-qualifiers" value="${t.qualifiersPerGroup}"></div>
+                </div>
+              </div>
+              <br><button class="btn-blue" onclick="updateTournament(${t.id})">Enregistrer</button>
+            </div>
+            <div class="card">
+              <h4>Inscrits (${t.players.length}/${t.max})</h4>
+              <ul class="player-list">${t.players.map(p => `<li class="player-item"><span>${p}</span><button class="btn-danger" style="padding:4px 8px; font-size:0.8rem;" onclick="kickPlayer(${t.id}, '${p}')">Expulser</button></li>`).join('')}</ul>
+            </div>`;
+          if (t.format === 'groups' && t.players.length >= t.min) {
+            html += `<div class="card"><h4>Tirage Poules</h4><button class="btn-blue" onclick="setupGroups(${t.id}, 'random')">Générer aléatoirement</button><div style="margin-top:10px;">${t.groups.map(g => `<p><strong>${g.name}:</strong> ${g.players.join(', ')}</p>`).join('')}</div></div>`;
+          }
+          if (t.players.length >= t.min) html += `<br><button class="btn-blue" style="font-size:1.2rem; width:100%;" onclick="startTourney(${t.id})">🚀 Lancer le tournoi</button>`;
         }
-      } else {
-        // Affichage des poules en lecture seule partout après le draft
-        if (t.format === 'groups' && t.groups.length > 0) {
+      } else if (t.status === 'active_groups' || t.status === 'active_league') {
+        if (t.format === 'league') {
+          html += `<h3>Classement Championnat</h3>` + renderStandingsTable(t.players, t.matches, 'Championnat', 1);
+        } else {
           html += `<h3>Classements des Poules</h3>`;
           t.groups.forEach(g => {
             html += `<h4>${g.name}</h4>` + renderStandingsTable(g.players, t.matches, g.name, t.qualifiersPerGroup);
           });
-          if (t.status === 'active_groups' && isCreator) {
+          if (isCreator) {
             html += `<br><button class="btn-blue" style="width:100%;" onclick="closeGroups(${t.id})">🏁 Clôturer les poules & configurer les phases finales</button><br>`;
           }
         }
 
-        if (t.status === 'knockout_setup') {
-          let qualified = [];
-          t.groups.forEach(g => {
-            const s = computeStandings(g.players, t.matches, g.name);
-            for (let i = 0; i < t.qualifiersPerGroup && i < s.length; i++) qualified.push(s[i].name);
-          });
-          html += `<h3>Configuration Phases Finales</h3>`;
-          if (qualified.length >= 4) {
-            html += `
-              <div class="card"><h4>Demi-finale 1</h4><div class="grid-2"><select id="ko-sf1-p1">${qualified.map(p=>`<option value="${p}">${p}</option>`).join('')}</select><select id="ko-sf1-p2">${qualified.map(p=>`<option value="${p}" ${qualified[1]?'selected':''}>${p}</option>`).join('')}</select></div></div>
-              <div class="card"><h4>Demi-finale 2</h4><div class="grid-2"><select id="ko-sf2-p1">${qualified.map(p=>`<option value="${p}" ${qualified[2]?'selected':''}>${p}</option>`).join('')}</select><select id="ko-sf2-p2">${qualified.map(p=>`<option value="${p}" ${qualified[3]?'selected':''}>${p}</option>`).join('')}</select></div></div>
-              <button class="btn-blue" style="width:100%;" onclick="createKnockout(${t.id})">Valider les Demi-finales</button>
-            `;
+        html += `<h3 style="margin-top:20px;">Matchs</h3>`;
+        t.matches.forEach(m => {
+          html += `<div class="match-card"><span style="font-size:0.8rem; color:var(--text-muted); width:90px;">[${m.stage}]</span><span class="match-team">${m.p1}</span><span class="match-score">${m.s1 !== null ? m.s1 : '-'} : ${m.s2 !== null ? m.s2 : '-'}</span><span class="match-team right">${m.p2}</span>${isCreator ? `<button class="btn-blue" style="margin-left:15px;" onclick="enterScore(${t.id}, ${m.id})">Score</button>` : ''}</div>`;
+        });
+      } else if (t.status === 'knockout_setup') {
+        // Collecter automatiquement les qualifiés de chaque poule
+        let qualifiedPlayers = [];
+        t.groups.forEach(g => {
+          const standings = computeStandings(g.players, t.matches, g.name);
+          for (let i = 0; i < t.qualifiersPerGroup && i < standings.length; i++) {
+            qualifiedPlayers.push(standings[i].name);
           }
-        }
+        });
 
-        if (t.matches.filter(m => !m.stage.includes('Poule') && m.stage !== 'Championnat').length > 0) {
-          html += `<h3 style="margin-top:20px;">Phases Finales</h3>`;
-          t.matches.filter(m => !m.stage.includes('Poule') && m.stage !== 'Championnat').forEach(m => {
-            html += `<div class="match-card"><span style="color:var(--accent-green); width:130px;">[${m.stage}]</span><span class="match-team">${m.p1}</span><span class="match-score">${m.s1 !== null ? m.s1 : '-'} : ${m.s2 !== null ? m.s2 : '-'}</span><span class="match-team right">${m.p2}</span>${isCreator ? `<button class="btn-blue" style="margin-left:15px;" onclick="enterScore(${t.id}, ${m.id})">Score</button>` : ''}</div>`;
-          });
-        }
+        html += `<h3>Configuration des Phases Finales</h3>
+          <p style="color:var(--text-muted);">Joueurs qualifiés : ${qualifiedPlayers.join(', ')}</p><br>`;
 
-        if (isCreator && t.status === 'active_knockout') {
-          html += `<br><button class="btn-blue" style="width:100%; background-color:var(--accent-green);" onclick="finishTourney(${t.id})">🏆 Clôturer et enregistrer le tournoi dans l'historique</button>`;
+        if (qualifiedPlayers.length === 2) {
+          html += `
+            <div class="card">
+              <h4>Finale</h4>
+              <div class="grid-2">
+                <div class="form-group"><label>Joueur 1</label><select id="ko-f-p1">${qualifiedPlayers.map(p=>`<option value="${p}">${p}</option>`).join('')}</select></div>
+                <div class="form-group"><label>Joueur 2</label><select id="ko-f-p2">${qualifiedPlayers.map(p=>`<option value="${p}" ${qualifiedPlayers[1]? 'selected':''}>${p}</option>`).join('')}</select></div>
+              </div>
+            </div>
+            <button class="btn-blue" style="width:100%; font-size:1.1rem;" onclick="createKnockout(${t.id}, 'final_only')">Lancer la Finale</button>
+          `;
+        } else if (qualifiedPlayers.length >= 4) {
+          html += `
+            <div class="card">
+              <h4>Demi-finale 1</h4>
+              <div class="grid-2">
+                <div class="form-group"><select id="ko-sf1-p1">${qualifiedPlayers.map(p=>`<option value="${p}">${p}</option>`).join('')}</select></div>
+                <div class="form-group"><select id="ko-sf1-p2">${qualifiedPlayers.map(p=>`<option value="${p}" ${qualifiedPlayers[1]? 'selected':''}>${p}</option>`).join('')}</select></div>
+              </div>
+            </div>
+            <div class="card">
+              <h4>Demi-finale 2</h4>
+              <div class="grid-2">
+                <div class="form-group"><select id="ko-sf2-p1">${qualifiedPlayers.map(p=>`<option value="${p}" ${qualifiedPlayers[2]? 'selected':''}>${p}</option>`).join('')}</select></div>
+                <div class="form-group"><select id="ko-sf2-p2">${qualifiedPlayers.map(p=>`<option value="${p}" ${qualifiedPlayers[3]? 'selected':''}>${p}</option>`).join('')}</select></div>
+              </div>
+            </div>
+            <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:15px;">* Les vainqueurs s'affronteront en Finale et les perdants en Petite Finale (les matchs de finale s'ajouteront automatiquement après la saisie des scores des demis, ou vous pourrez les configurer).</p>
+            <button class="btn-blue" style="width:100%; font-size:1.1rem;" onclick="createKnockout(${t.id}, 'semis')">Lancer les Demi-finales</button>
+          `;
+        } else {
+          html += `<p style="color:var(--accent-red);">Nombre de qualifiés insuffisant (${qualifiedPlayers.length}).</p>`;
         }
+      } else if (t.status === 'active_knockout') {
+        html += `<h3>Tableau des Phases Finales</h3>`;
+        t.matches.filter(m => m.stage.includes('finale') || m.stage.includes('Finale')).forEach(m => {
+          html += `<div class="match-card"><span style="font-size:0.8rem; color:var(--accent-green); width:110px;">[${m.stage}]</span><span class="match-team">${m.p1}</span><span class="match-score">${m.s1 !== null ? m.s1 : '-'} : ${m.s2 !== null ? m.s2 : '-'}</span><span class="match-team right">${m.p2}</span>${isCreator ? `<button class="btn-blue" style="margin-left:15px;" onclick="enterScore(${t.id}, ${m.id})">Score</button>` : ''}</div>`;
+        });
       }
+
       html += `</div>`;
       document.getElementById('detail-content').innerHTML = html;
     }
 
-    async function joinTourney(id) { await fetch(`/api/tournaments/${id}/join`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: currentUser.username }) }); viewTournament(id); }
-    async function leaveTourney(id) { await fetch(`/api/tournaments/${id}/leave`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: currentUser.username }) }); viewTournament(id); }
-    async function deleteTourney(id) { if (confirm('Supprimer ?')) { await fetch(`/api/tournaments/${id}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ creator: currentUser.username }) }); loadTournaments(); showSection('tournaments-list'); } }
-    async function setupGroups(id) { await fetch(`/api/tournaments/${id}/setup-groups`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ creator: currentUser.username, mode: 'random' }) }); viewTournament(id); }
-    async function startTourney(id) { await fetch(`/api/tournaments/${id}/start`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ creator: currentUser.username }) }); viewTournament(id); }
-    async function closeGroups(id) { await fetch(`/api/tournaments/${id}/close-groups`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ creator: currentUser.username }) }); viewTournament(id); }
-    async function createKnockout(id) {
-      let matchups = [
-        { stage: 'Demi-finale 1', p1: document.getElementById('ko-sf1-p1').value, p2: document.getElementById('ko-sf1-p2').value },
-        { stage: 'Demi-finale 2', p1: document.getElementById('ko-sf2-p1').value, p2: document.getElementById('ko-sf2-p2').value },
-        { stage: 'Petite finale', p1: 'Perdant Demi 1', p2: 'Perdant Demi 2' },
-        { stage: 'Finale', p1: 'Vainqueur Demi 1', p2: 'Vainqueur Demi 2' }
-      ];
+    async function joinTourney(id) {
+      await fetch(`/api/tournaments/${id}/join`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: currentUser.username }) });
+      viewTournament(id);
+    }
+    async function leaveTourney(id) {
+      await fetch(`/api/tournaments/${id}/leave`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: currentUser.username }) });
+      viewTournament(id);
+    }
+    async function kickPlayer(id, playerToKick) {
+      await fetch(`/api/tournaments/${id}/kick`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ creator: currentUser.username, playerToKick }) });
+      viewTournament(id);
+    }
+    async function updateTournament(id) {
+      const body = {
+        creator: currentUser.username,
+        name: document.getElementById('edit-name').value.trim(),
+        min: document.getElementById('edit-min').value,
+        max: document.getElementById('edit-max').value,
+        format: document.getElementById('edit-format').value,
+        groupSize: document.getElementById('edit-groupsize').value,
+        qualifiersPerGroup: document.getElementById('edit-qualifiers').value
+      };
+      await fetch(`/api/tournaments/${id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      alert('Mis à jour !');
+      viewTournament(id);
+    }
+    async function deleteTourney(id) {
+      if (confirm('Supprimer ce tournoi ?')) {
+        await fetch(`/api/tournaments/${id}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ creator: currentUser.username }) });
+        loadTournaments(); showSection('tournaments-list');
+      }
+    }
+    async function setupGroups(id, mode) {
+      await fetch(`/api/tournaments/${id}/setup-groups`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ creator: currentUser.username, mode }) });
+      viewTournament(id);
+    }
+    async function startTourney(id) {
+      await fetch(`/api/tournaments/${id}/start`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ creator: currentUser.username }) });
+      viewTournament(id);
+    }
+    async function closeGroups(id) {
+      await fetch(`/api/tournaments/${id}/close-groups`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ creator: currentUser.username }) });
+      viewTournament(id);
+    }
+    async function createKnockout(id, type) {
+      let matchups = [];
+      if (type === 'final_only') {
+        matchups.push({ stage: 'Finale', p1: document.getElementById('ko-f-p1').value, p2: document.getElementById('ko-f-p2').value });
+      } else if (type === 'semis') {
+        matchups.push({ stage: 'Demi-finale 1', p1: document.getElementById('ko-sf1-p1').value, p2: document.getElementById('ko-sf1-p2').value });
+        matchups.push({ stage: 'Demi-finale 2', p1: document.getElementById('ko-sf2-p1').value, p2: document.getElementById('ko-sf2-p2').value });
+        // Ajout d'une petite finale avec des placeholders ou vide à remplir après les demis
+        matchups.push({ stage: 'Petite finale (3ème place)', p1: 'Perdant Demi 1', p2: 'Perdant Demi 2' });
+        matchups.push({ stage: 'Finale', p1: 'Vainqueur Demi 1', p2: 'Vainqueur Demi 2' });
+      }
       await fetch(`/api/tournaments/${id}/create-knockout`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ creator: currentUser.username, matchups }) });
       viewTournament(id);
     }
     async function enterScore(tourneyId, matchId) {
-      const s1 = prompt("Score p1 :"); const s2 = prompt("Score p2 :");
-      if (s1 !== null && s2 !== null) { await fetch(`/api/tournaments/${tourneyId}/score`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ creator: currentUser.username, matchId, s1, s2 }) }); viewTournament(tourneyId); }
-    }
-    async function finishTourney(id) {
-      if (confirm('Clôturer définitivement le tournoi et l\'envoyer dans l\'historique ?')) {
-        await fetch(`/api/tournaments/${id}/finish`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ creator: currentUser.username }) });
-        loadTournaments(); showSection('tournaments-list');
-        alert('Tournoi enregistré dans l\'historique !');
+      const s1 = prompt("Score premier joueur :");
+      const s2 = prompt("Score second joueur :");
+      if (s1 !== null && s2 !== null) {
+        await fetch(`/api/tournaments/${tourneyId}/score`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ creator: currentUser.username, matchId, s1, s2 }) });
+        viewTournament(tourneyId);
       }
     }
   </script>
